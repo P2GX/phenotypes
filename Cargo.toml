@@ -12,5 +12,8 @@ license-file = "LICENSE"
 
 authors = ["Daniel Danis <daniel.gordon.danis@protonmail.com>"]
 
+[badges]
+maintenance = { status = "experimental" }
+
 [dependencies]
 ontolius = { version = "0.5.2", default-features = false }
