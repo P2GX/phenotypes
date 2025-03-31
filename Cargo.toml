@@ -1,6 +1,6 @@
 [package]
 name = "phenotypes"
-version = "0.1.0"
+version = "0.1.1"
 description = "Common types and traits for modeling clinical information"
 keywords = ["phenomics", "bioinformatics", "HPO", "phenopackets"]
 edition = "2024"
@@ -12,4 +12,8 @@ license-file = "LICENSE"
 
 authors = ["Daniel Danis <daniel.gordon.danis@protonmail.com>"]
 
+[badges]
+maintenance = { status = "experimental" }
+
 [dependencies]
+ontolius = { version = "0.5.2", default-features = false }
