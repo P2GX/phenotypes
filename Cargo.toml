@@ -1,6 +1,6 @@
 [package]
 name = "phenotypes"
-version = "0.1.1"
+version = "0.1.2-dev0"
 description = "Common types and traits for modeling clinical information"
 keywords = ["phenomics", "bioinformatics", "HPO", "phenopackets"]
 edition = "2024"
