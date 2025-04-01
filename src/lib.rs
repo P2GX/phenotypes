@@ -2,6 +2,8 @@
 #![deny(unsafe_code)] // at least for now.. 👻
 
 mod model;
+mod observation;
 pub mod simple;
 
-pub use model::{Observable, Fraction};
+pub use model::Fraction;
+pub use observation::{Observable, ObservableFeatures};
