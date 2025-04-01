@@ -1,19 +1,5 @@
 use std::ops::Add;
 
-/// An `Observable` entity is either in a *present* or an *excluded* state
-/// in the investigated item.
-///
-/// For instance, a phenotypic feature such as [Polydactyly](https://hpo.jax.org/browse/term/HP:0010442)
-/// can either be present or excluded in the study subject.
-pub trait Observable {
-    /// Test if the feature was observed in one or more items.
-    fn is_present(&self) -> bool;
-    /// Test if the feature was not observed in any of the items.
-    fn is_excluded(&self) -> bool {
-        !self.is_present()
-    }
-}
-
 /// A `Fraction` represents the *n* of *m* frequency of a feature in one or more annotated items.
 ///
 /// For instance, we can represent the number of times *n* a feature
