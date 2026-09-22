@@ -11,10 +11,9 @@ use std::ops::Add;
 /// The `numerator` must be less than or equal to `denominator`.
 /// However, it is possible for both to equal to `0`.
 ///
-/// `Fraction` is generic over the data type that represents the count.
-/// To simplify the API, we use `u32` as default.
+/// `Fraction` is generic over the count data type `T`.
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
-pub struct Fraction<T = u32> {
+pub struct Fraction<T> {
     n: T,
     /// The `m` represents the total count of annotated items investigated
     /// for presence/absence of the feature.
