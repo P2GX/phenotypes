@@ -1,3 +1,5 @@
+use ontolius::Identified;
+
 /// An `Observable` entity is either in a *present* or an *excluded* state
 /// in the investigated item.
 ///
@@ -12,67 +14,57 @@ pub trait Observable {
     }
 }
 
-/// Common functionalities for containers of [`Observable`] features.
+impl<T> Observable for &'_ T
+where
+    T: Observable,
+{
+    fn is_present(&self) -> bool {
+        (*self).is_present()
+    }
+}
+
+impl<T> Observable for Box<T>
+where
+    T: Observable,
+{
+    fn is_present(&self) -> bool {
+        (**self).is_present()
+    }
+}
+
+/// Common functionalities for containers of the [`Observable`] features.
 pub trait ObservableFeatures {
     /// The feature.
-    type Feature;
+    type Feature: Identified + Observable;
 
     /// Get an iterator over features that were observed in the investigated item.
-    fn present_features(&self) -> impl Iterator<Item = &Self::Feature>;
+    fn present_features(&self) -> impl Iterator<Item = Self::Feature>;
+
     /// Get the number of observed features.
     fn present_feature_count(&self) -> usize {
         self.present_features().count()
     }
 
     /// Get an iterator over features whose presence was specifically excluded in the investigated item.
-    fn excluded_features(&self) -> impl Iterator<Item = &Self::Feature>;
+    fn excluded_features(&self) -> impl Iterator<Item = Self::Feature>;
+
     /// Get the number of features whose presence was specifically excluded.
     fn excluded_feature_count(&self) -> usize {
         self.excluded_features().count()
     }
 }
 
-impl<T> ObservableFeatures for &[T]
+impl<'a, T> ObservableFeatures for &'a [T]
 where
-    T: Observable,
+    &'a T: Identified + Observable,
 {
-    type Feature = T;
+    type Feature = &'a T;
 
-    fn present_features(&self) -> impl Iterator<Item = &Self::Feature> {
+    fn present_features(&self) -> impl Iterator<Item = Self::Feature> {
         self.iter().filter(|&t| t.is_present())
     }
 
-    fn excluded_features(&self) -> impl Iterator<Item = &Self::Feature> {
-        self.iter().filter(|&t| t.is_excluded())
-    }
-}
-
-impl<T, const N: usize> ObservableFeatures for [T; N]
-where
-    T: Observable,
-{
-    type Feature = T;
-
-    fn present_features(&self) -> impl Iterator<Item = &Self::Feature> {
-        self.iter().filter(|&t| t.is_present())
-    }
-
-    fn excluded_features(&self) -> impl Iterator<Item = &Self::Feature> {
-        self.iter().filter(|&t| t.is_excluded())
-    }
-}
-
-impl<T> ObservableFeatures for Vec<T>
-where
-    T: Observable,
-{
-    type Feature = T;
-
-    fn present_features(&self) -> impl Iterator<Item = &Self::Feature> {
-        self.iter().filter(|&t| t.is_present())
-    }
-
-    fn excluded_features(&self) -> impl Iterator<Item = &Self::Feature> {
+    fn excluded_features(&self) -> impl Iterator<Item = Self::Feature> {
         self.iter().filter(|&t| t.is_excluded())
     }
 }

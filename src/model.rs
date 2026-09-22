@@ -13,7 +13,7 @@ use std::ops::Add;
 ///
 /// `Fraction` is generic over the data type that represents the count.
 /// To simplify the API, we use `u32` as default.
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct Fraction<T = u32> {
     n: T,
     /// The `m` represents the total count of annotated items investigated
