@@ -16,4 +16,10 @@ authors = ["Daniel Danis <daniel.gordon.danis@protonmail.com>"]
 maintenance = { status = "experimental" }
 
 [dependencies]
-ontolius = { version = "0.5.2", default-features = false }
+num-traits = "0.2.19"
+ontolius = { version = "0.8.1", default-features = false }
+
+[[example]]
+name = "observable-features"
+crate-type = ["staticlib"]
+test = true
