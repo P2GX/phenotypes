@@ -16,7 +16,7 @@ pub trait Observable {
 
 impl<T> Observable for &'_ T
 where
-    T: Observable,
+    T: Observable + ?Sized,
 {
     fn is_present(&self) -> bool {
         (*self).is_present()
@@ -25,10 +25,46 @@ where
 
 impl<T> Observable for Box<T>
 where
-    T: Observable,
+    T: Observable + ?Sized,
 {
     fn is_present(&self) -> bool {
         (**self).is_present()
+    }
+}
+
+/// Represents a property of an item that has been investigated
+/// and found to be present in `n` of `m` tested cases.
+pub trait Fractional {
+    /// The count of items where the property was found to be present.
+    fn n(&self) -> u64;
+
+    /// The total tested item count.
+    fn m(&self) -> u64;
+}
+
+impl<T> Fractional for &'_ T
+where
+    T: Fractional + ?Sized,
+{
+    fn n(&self) -> u64 {
+        (*self).n()
+    }
+
+    fn m(&self) -> u64 {
+        (*self).m()
+    }
+}
+
+impl<T> Fractional for Box<T>
+where
+    T: Fractional + ?Sized,
+{
+    fn n(&self) -> u64 {
+        (**self).n()
+    }
+
+    fn m(&self) -> u64 {
+        (**self).m()
     }
 }
 

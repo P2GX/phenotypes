@@ -10,4 +10,4 @@ pub(crate) mod similarity;
 pub(crate) mod temporal;
 
 pub use model::Fraction;
-pub use observation::{Observable, ObservableFeatures};
+pub use observation::{Fractional, Observable, ObservableFeatures};

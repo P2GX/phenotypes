@@ -33,6 +33,9 @@ fn individual() {
     assert_eq!(efc, 1);
 }
 
+/// Create a vec of aggregated features and show
+/// that we can partition the features into those
+/// that were present in 0 vs. >0 individuals.
 #[test]
 fn aggregated() {
     let aggregated: Vec<_> = [
@@ -44,7 +47,7 @@ fn aggregated() {
     .map(|(curie, counts)| {
         let term_id: TermId = curie.parse().expect("CURIE is valid");
         let f = Fraction::try_from(counts).expect("OK");
-        AggregatedFeature::from((term_id, f))
+        AggregatedFeature::<'_, u64>::from((term_id, f))
     })
     .collect();
 
