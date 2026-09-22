@@ -1,3 +1,8 @@
+//! Annotations to an ontology term.
+//!
+//! The module contains structures to represent information about the annotation to an ontology term.
+//! The [`IndividualFeature`] represents a term annotation in the context of an individual (a person, mouse, gene, etc.).
+//! The [`AggregatedFeature`] represents combines the annotation ascertained from a group of individuals, including the annotation's frequency.
 use ontolius::{Identified, TermId};
 
 use crate::{Fraction, Observable, observation::Fractional};
