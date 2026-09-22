@@ -16,6 +16,7 @@ authors = ["Daniel Danis <daniel.gordon.danis@protonmail.com>"]
 maintenance = { status = "experimental" }
 
 [dependencies]
+num-traits = "0.2.19"
 ontolius = { version = "0.8.1", default-features = false }
 
 [[example]]

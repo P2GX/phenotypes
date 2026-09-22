@@ -3,6 +3,7 @@
 //! The module contains structures to represent information about the annotation to an ontology term.
 //! The [`IndividualFeature`] represents a term annotation in the context of an individual (a person, mouse, gene, etc.).
 //! The [`AggregatedFeature`] represents combines the annotation ascertained from a group of individuals, including the annotation's frequency.
+use num_traits::Zero;
 use ontolius::{Identified, TermId};
 
 use crate::{Fraction, Observable, observation::Fractional};
@@ -52,6 +53,8 @@ impl Observable for IndividualFeature<'_> {
 
 /// Represents an annotation to an ontology term aggregated over a group of individuals
 /// (a cohort of human study subjects or mice, a study set of genes, etc.).
+///
+/// The type is generic over `C` - the data type for holding the counts.
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub struct AggregatedFeature<'a, C> {
     term_id: std::borrow::Cow<'a, TermId>,
@@ -97,9 +100,9 @@ where
 
 impl<C> Observable for AggregatedFeature<'_, C>
 where
-    C: Clone + Into<u64>,
+    C: Clone + PartialOrd + Zero,
 {
     fn is_present(&self) -> bool {
-        self.n() > 0
+        self.fraction.n() > C::zero()
     }
 }

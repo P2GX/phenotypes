@@ -1,5 +1,7 @@
 use std::ops::Add;
 
+use num_traits::Unsigned;
+
 /// A `Fraction` represents the *n* of *m* frequency of a feature in one or more annotated items.
 ///
 /// For instance, we can represent the number of times *n* a feature
@@ -36,6 +38,7 @@ where
 }
 
 /// Convert a tuple with numerator and denominator into the `Fraction`.
+/// Both numerator and denominator must be [`Unsigned`] values.
 ///
 /// ## Examples
 ///
@@ -44,7 +47,7 @@ where
 /// ```
 /// use phenotypes::Fraction;
 ///
-/// let f = Fraction::try_from((1, 10)).expect("Should never fail for this input");
+/// let f = Fraction::<u8>::try_from((1, 10)).expect("Should never fail for this input");
 ///
 /// assert_eq!(f.n(), 1);
 /// assert_eq!(f.m(), 10);
@@ -55,12 +58,12 @@ where
 /// ```
 /// use phenotypes::Fraction;
 ///
-/// let err = Fraction::try_from((5, 3)).unwrap_err();
+/// let err = Fraction::<u8>::try_from((5, 3)).unwrap_err();
 /// assert_eq!(err, "Numerator must be less than or equal to denominator!");
 /// ```
 impl<T> TryFrom<(T, T)> for Fraction<T>
 where
-    T: PartialOrd,
+    T: PartialOrd + Unsigned,
 {
     type Error = &'static str;
 
@@ -82,8 +85,8 @@ where
 /// ```
 /// use phenotypes::Fraction;
 ///
-/// let a = Fraction::try_from((1, 2)).unwrap();
-/// let b = Fraction::try_from((3, 3)).unwrap();
+/// let a = Fraction::<u8>::try_from((1, 2)).unwrap();
+/// let b = Fraction::<u8>::try_from((3, 3)).unwrap();
 ///
 /// let c = a + b;
 ///
