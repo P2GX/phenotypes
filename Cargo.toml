@@ -16,8 +16,7 @@ authors = ["Daniel Danis <daniel.gordon.danis@protonmail.com>"]
 maintenance = { status = "experimental" }
 
 [dependencies]
-# ontolius = { version = "0.8.0", default-features = false }
-ontolius = { git = "https://github.com/ielis/ontolius.git", branch="development",  default-features = false }
+ontolius = { version = "0.8.1", default-features = false }
 
 [[example]]
 name = "observable-features"
